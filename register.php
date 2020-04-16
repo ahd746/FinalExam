@@ -1,61 +1,95 @@
 <?php
+$errors = [];
 
-  $errors = [];
+// Step 1: Validate the email and password are present and not empty
+//  a) Provide a human readable error message if they are
 
-  // Step 1: Validate the email and password are present and not empty
-  //  a) Provide a human readable error message if they are
-
-
-  // Step 2: Validate the email is in the correct format
-  //  b) Provide a logical error message if it isn't
-
-
-  // Step 3: Start the session if it isn't already started
-
-
-  // Step 4: Check if there are any errors
-  if () {
-    // a) Assign the form values to a new session variable
-    $_SESSION['form_values'] = null;
-    
-    // Store the errors
-    $_SESSION['errors'] = $errors;
-    
-    // b) Redirect back to the form
-    
+foreach (['email', 'email_confirmation', 'password', 'password_confirmation'] as $field) {
+  if (empty($_POST[$field])) {
+    $human_field = str_replace("_", " ", $field);
+    $errors[] = "The field {$human_field} is required.";
   }
+}
 
-  // Step 5: Hash the password and store it
-  $_POST['password'] = null;
+// Validate the email matches the email_confirmation
+if ($_POST['email'] !== $_POST['email_confirmation']) {
+  $errors[] = "The email doesn't match the email confirmation field";
+}
 
+// Validate the password matches the password_confirmation
+if ($_POST['password'] !== $_POST['password_confirmation']) {
+  $errors[] = "The password doesn't match the password confirmation field";
+}
 
-  // Step 6: USING THE PROVIDED _connect.php script!
-  // Include the connection script
-  // and assign the returned connection to a variable
+// Step 2: Validate the email is in the correct format
+//  b) Provide a logical error message if it isn't
 
-  
-  // Step 7:
-  //  a) Prepare the sql statement
-  
+if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+  $errors[] = "Not a vaild email, Please check it";
+}
+// Step 3: Start the session if it isn't already started
+if (session_status() === PHP_SESSION_NONE) session_start();
 
-  // b) Bind the email and password parameters to there values
-  
+// Step 4: Check if there are any errors
+if (count($errors) > 0) {
+  // a) Assign the form values to a new session variable
+  $_SESSION['form_values'] = $_POST;
 
-  // c) Execute the statement
-  
+  // Store the errors
+  $_SESSION['errors'] = $errors;
 
-  // Check if there are errors in the SQL (You don't need to do anything. This has been provided)
-  if ($stmt->errorCode() === "23000") {
-    $_SESSION['errors'][] = "You have already registered. Please login.";
-    $_SESSION['form_values'] = $_POST;
-  } else if ($stmt->errorCode() !== "00000") {
-    // Add the error message to the errors session array
-    $_SESSION['errors'][] = "There was an error during registration.";
-    $_SESSION['form_values'] = $_POST;
-  } else {
-    // Add the success message to the successes session array
-    $_SESSION['successes'][] = "You have been registered successfully.";
-  }
-  
+  // b) Redirect back to the form
   header('Location: ./');
   exit;
+}
+
+// Step 5: Hash the password and store it
+$_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+
+// Step 6: USING THE PROVIDED _connect.php script!
+// Include the connection script
+// and assign the returned connection to a variable
+
+require_once("./_connect.php");
+$conn = connect();
+
+// Step 7:
+//  a) Prepare the sql statement
+
+$sql = " 
+INSERT INTO users (
+  email,
+  password
+) VALUES (
+  :email,
+  :password
+)
+";
+$stmt = $conn->prepare($sql);
+
+// b) Bind the email and password parameters to there values
+$stmt->bindParam(':email', $_POST['email'], PDO::PARAM_STR);
+$stmt->bindParam(':password', $_POST['password'], PDO::PARAM_STR);
+
+// c) Execute the statement
+$stmt->execute();
+
+// Check if there are errors in the SQL (You don't need to do anything. This has been provided)
+if ($stmt->errorCode() === "23000") {
+  $_SESSION['errors'][] = "You have already registered. Please login.";
+  $_SESSION['form_values'] = $_POST;
+} else if ($stmt->errorCode() !== "00000") {
+  // Add the error message to the errors session array
+  $_SESSION['errors'][] = "There was an error during registration.";
+  $_SESSION['form_values'] = $_POST;
+} else {
+  // Add the success message to the successes session array
+  $_SESSION['successes'][] = "You have been registered successfully.";
+}
+
+header('Location: ./');
+exit;
+
+
+echo "hello";

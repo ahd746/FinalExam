@@ -2,3 +2,27 @@ Unknown column 'A' in 'field list'
 
 Unknown column 'A' in 'field list'
 
+[17-04-2020 02:54:43][ERROR]: Undefined index: data_file
+FILE: C:\xampp\htdocs\PHP\COMP-1005\student-hobbies\hobbies\upload.php
+LINE: 41
+[17-04-2020 02:55:42][ERROR]: Undefined index: data_file
+FILE: C:\xampp\htdocs\PHP\COMP-1005\student-hobbies\hobbies\upload.php
+LINE: 41
+[17-04-2020 03:06:57][ERROR]: Undefined index: data_file
+FILE: C:\xampp\htdocs\PHP\COMP-1005\student-hobbies\hobbies\upload.php
+LINE: 42
+[17-04-2020 03:07:10][ERROR]: Undefined index: data_file
+FILE: C:\xampp\htdocs\PHP\COMP-1005\student-hobbies\hobbies\upload.php
+LINE: 42
+[17-04-2020 03:26:11][ERROR]: Undefined index: data_file
+FILE: C:\xampp\htdocs\PHP\COMP-1005\student-hobbies\hobbies\upload.php
+LINE: 39
+[17-04-2020 03:27:26][ERROR]: Undefined index: data_file
+FILE: C:\xampp\htdocs\PHP\COMP-1005\student-hobbies\hobbies\upload.php
+LINE: 39
+[17-04-2020 03:30:48][ERROR]: Undefined index: data_file
+FILE: C:\xampp\htdocs\PHP\COMP-1005\student-hobbies\hobbies\upload.php
+LINE: 39
+[17-04-2020 03:31:01][ERROR]: Undefined index: data_file
+FILE: C:\xampp\htdocs\PHP\COMP-1005\student-hobbies\hobbies\upload.php
+LINE: 39

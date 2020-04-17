@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 //  back to the home page
 if (!isset($_SESSION['user'])) {
   $_SESSION['errors'][] = "You must log in first";
-  header('Location: ./');
+  header('Location: ../../../index.php');
   exit;
 }
 
@@ -26,7 +26,11 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 // Step 4: Verify the file is a JSON file (use any strategy you wish)
 //  a) Add an error if it isn't a JSON file
 //  b) Redirect back to the hobbies/index.php page if there's an error
-
+$file_content_type = mime_content_type($_FILES['data_file']['name']);
+if (!preg_match('/text\/plain/i', $file_content_type)) {
+  echo "You data must be in JSON format";
+  header('Location: index.php');
+}
 
 // Step 5: Wrap the following code (using a try/catch block)
 //  NOTE: Pay special attention to the comments.

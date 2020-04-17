@@ -26,7 +26,7 @@ on hobbies.user_id= users.id
 where user_id = :id";
 
 $stmt = $conn->prepare($sql);
-$stmt->bindParam(':id', $_SESSION['user'], PDO::PARAM_STR);
+$stmt->bindParam(':id', $_SESSION['user']['id'], PDO::PARAM_STR);
 $stmt->execute();
 $hobbies =  $stmt->fetchAll();
 

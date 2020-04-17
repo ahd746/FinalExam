@@ -13,7 +13,7 @@ $conn = connect();
 // selecting the user by their email
 // HINT: You're using PDO so make sure your code reflects that!
 
-$sql = "SELECT email FROM users WHERE email = :email";
+$sql = "SELECT * FROM users WHERE email = :email";
 
 // Step 4: Validate and sanitize the email
 

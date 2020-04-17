@@ -1,5 +1,4 @@
 <?php
-
 // Step 1: Start the session IF it hasn't already been started
 if (session_status() === PHP_SESSION_NONE) session_start();
 
@@ -17,12 +16,25 @@ if (!isset($_SESSION['user'])) {
 // Include the connection script
 // and assign the returned connection to a variable
 
-require_once("./_connect.php");
+require_once("../_connect.php");
 $conn = connect();
 
 // Step 4: Fetch ALL the hobbies for the LOGGED IN USER
-$hobbies = null;
+$sql = "select * from hobbies
+join users
+on hobbies.user_id= users.id
+where user_id = :id";
+
+$stmt = $conn->prepare($sql);
+$stmt->bindParam(':id', $_SESSION['user'], PDO::PARAM_STR);
+$stmt->execute();
+$hobbies =  $stmt->fetchAll();
+
 ?>
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">

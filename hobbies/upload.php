@@ -26,18 +26,12 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 // Step 4: Verify the file is a JSON file (use any strategy you wish)
 //  a) Add an error if it isn't a JSON file
 //  b) Redirect back to the hobbies/index.php page if there's an error
-if (!empty($_FILES['data']['tmp_name'])) {
-  $file_content_type = mime_content_type($_FILES['data']['tmp_name']);
-  if (!preg_match('/text\/plain/i', $file_content_type)) {
-    echo "You data must be in JSON format";
-    exit;
-  }
+
 
 // Step 5: Wrap the following code (using a try/catch block)
 //  NOTE: Pay special attention to the comments.
 //    If you find yourself adding new curly braces you're doing it wrong!
-try
-{ // NOTE: This curly brace is for the try block
+try { // NOTE: This curly brace is for the try block
   $file_location = "./uploads/{$_FILES['data_file']['name']}";
   move_uploaded_file($_FILES['data_file']['tmp_name'], $file_location);
 
@@ -98,7 +92,7 @@ try
   $_SESSION['successes'][] = "Your hobbies were created successfully.";
   header('Location: ./');
   exit;
-} catch(Exception $e){ // These curly braces are for the catch block
+} catch (Exception $e) { // These curly braces are for the catch block
   // Step 7: Record the error message (provided by the Exception)
   //  in the error log file using the correct function
   //  https://www.php.net/manual/en/function.error-log

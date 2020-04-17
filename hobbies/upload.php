@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 //  back to the home page
 if (!isset($_SESSION['user'])) {
   $_SESSION['errors'][] = "You must log in first";
-  header('Location: ../../../index.php');
+  header('Location: ./');
   exit;
 }
 
@@ -29,7 +29,7 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 $file_content_type = mime_content_type($_FILES['data_file']['name']);
 if (!preg_match('/text\/plain/i', $file_content_type)) {
   echo "You data must be in JSON format";
-  header('Location: index.php');
+  header('Location: ./');
 }
 
 // Step 5: Wrap the following code (using a try/catch block)
